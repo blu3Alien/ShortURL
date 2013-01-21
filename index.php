@@ -24,6 +24,8 @@
 </body>
 </html>
 <?php
+if ($_SERVER['HTTP_HOST'] == '' || $_SERVER['HTTP_HOST'] == NULL) die ('Could not detect domain name.');
+
 $con = mysql_connect("localhost","shorturl","");  
 if (!$con) {
 	die('Could not connect: ' . mysql_error());  
@@ -71,7 +73,7 @@ if ( isset( $_SERVER['PATH_INFO'] ) ) {
 		$shorturl = base_convert( $rand, 20, 36 );  
 		$sql = "INSERT INTO short_urls (id, created, url, shortened) VALUES ('', '". time()."', '". $url ."', '". $shorturl ."')";  
 		mysql_query( $sql, $con );  
-		echo '<p>Shortened url is <a href="http://srit.us/'. $shorturl .'">http://srit.us/'. $shorturl .'</a>'; 
+		echo '<p>Shortened url is <a href="http://'. $_SERVER['HTTP_HOST'] .'/'. $shorturl .'">http://'. $_SERVER['HTTP_HOST'] .'/'. $shorturl .'</a>'; 
 	}
 	else {
 		echo "URL is invalid. Try again.";
